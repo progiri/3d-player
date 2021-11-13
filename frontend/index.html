@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <title>3D radio</title>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script> -->
+    <link rel="stylesheet" href="style/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gemunu+Libre&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+    <div>
+        <header class="header">
+            <div class="header__section">
+                <h1 class="header__logo">3D radio</h1>
+            </div>
+            <div class="header__section">
+                <div class="header__item header_links">
+                    <a class="header__link" onclick="document.getElementById('signupForm').style.display='block'">Sign up</a>
+                </div>
+                <div class="header__item header_links">
+                    <a class="header__link" onclick="document.getElementById('loginForm').style.display='block'">Login</a>
+                </div>
+                <div class="header__item" id="headerUsername">
+                </div>
+
+                <div id="loginForm" class="modal">
+
+                    <div class="modal-content animate">
+                        <h1>Login</h1>
+                        <div class="container">
+                            <label for="uname"><b>Username</b></label>
+                            <input type="text" id="loginUsername" placeholder="Enter Username" name="uname" required>
+
+                            <label for="psw"><b>Password</b></label>
+                            <input type="password" id="loginPassword" placeholder="Enter Password" name="psw" required>
+
+                            <button class="login_btn" onclick="return Login()" type="submit">Login</button>
+                        </div>
+
+                        <div class="container" style="background-color:#f1f1f1">
+                            <button type="button" onclick="document.getElementById('loginForm').style.display='none'" class="cancelbtn">Cancel</button>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="signupForm" class="modal">
+
+                    <div class="modal-content animate">
+                        <h1>Sign Up</h1>
+                        <div class="container">
+                            <label for="uname"><b>Username</b></label>
+                            <input type="text" id="signupUsername" placeholder="Enter Username" name="uname" required>
+
+                            <label for="psw"><b>Password</b></label>
+                            <input type="password" id="signupPassword1" placeholder="Enter Password" name="psw" required>
+
+                            <label for="psw"><b>Repeat Password</b></label>
+                            <input type="password" id="signupPassword2" placeholder="Enter Password" name="psw" required>
+
+                            <button class="login_btn" onclick="return SignUp()" type="submit">Sign Up</button>
+                        </div>
+
+                        <div class="container" style="background-color:#f1f1f1">
+                            <button type="button" onclick="document.getElementById('signupForm').style.display='none'" class="cancelbtn">Cancel</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </header>
+        <div id="3d_obj">
+            <!-- <canvas id="canvasColor"></canvas> -->
+            <!-- Place for three.js -->
+        </div>
+        <footer class="footer">
+            <div class="footer__section">
+                <div class="select-container">
+                    <div class="select-box">
+                        <div class="options-container" id="musicsContainer"></div>
+                        <div class="selected" id="selectedMusic">
+                            Selected Music
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__section">
+                <div class="btns-container">
+                    <button class="action-btns">
+                        <div class="btn-previous"></div>
+                    </button>
+                    <button class="action-btns">
+                        <div class="btn-pause"></div>
+                    </button>
+                    <button class="action-btns">
+                        <div class="btn-play"></div>
+                    </button>
+                    <button class="action-btns">
+                        <div class="btn-next"></div>
+                    </button>
+                </div>
+            </div>
+            <div class="footer__section">
+                <div class="volume-container">
+                    <div class="volume-slider">
+                        <div class="volume-number">
+                            <div class="volume-icon"></div>
+                            <div id="volume-number">0</div>
+                        </div>
+                        <input type="range" min="0" max="100" value="0" id="slider">
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script type="module" src="scripts/3d.js"></script>
+    <script src="scripts/fetch.js"></script>
+    <script>
+        // Get the modal
+        var modal = document.getElementById('id01');
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // 
+        Profile().then((data) => {
+            if (data['username']) {
+                let headerLinks = document.querySelectorAll('.header_links')
+                headerLinks.forEach(el => el.style.display = 'none')
+                let headerUsername = document.getElementById('headerUsername')
+                headerUsername.innerHTML = `<a class="header__link">${data['username']}</a>
+                                            <a class="header__link" onclick="return Logout()">Logout</a>`
+            } else {
+                console.log(false)
+            }
+
+        })
+    </script>
+    <script src="scripts/main.js"></script>
+</body>
+
+</html>
