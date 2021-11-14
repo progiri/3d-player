@@ -82,6 +82,7 @@
             <div class="footer__section">
                 <div class="select-container">
                     <div class="select-box">
+                        <audio autoplay src="" id="audio"></audio>
                         <div class="options-container" id="musicsContainer"></div>
                         <div class="selected" id="selectedMusic">
                             Selected Music
@@ -90,23 +91,23 @@
                 </div>
             </div>
             <div class="footer__section">
-                <div class="btns-container">
-                    <button class="action-btns">
+                <div class="btns-container footer_disactive">
+                    <button class="action-btns" id="previous">
                         <div class="btn-previous"></div>
                     </button>
-                    <button class="action-btns">
+                    <button class="action-btns" id="pause">
                         <div class="btn-pause"></div>
                     </button>
-                    <button class="action-btns">
+                    <button class="action-btns" id="play">
                         <div class="btn-play"></div>
                     </button>
-                    <button class="action-btns">
+                    <button class="action-btns" id="next">
                         <div class="btn-next"></div>
                     </button>
                 </div>
             </div>
             <div class="footer__section">
-                <div class="volume-container">
+                <div class="volume-container footer_disactive">
                     <div class="volume-slider">
                         <div class="volume-number">
                             <div class="volume-icon"></div>
@@ -139,6 +140,8 @@
                 let headerUsername = document.getElementById('headerUsername')
                 headerUsername.innerHTML = `<a class="header__link">${data['username']}</a>
                                             <a class="header__link" onclick="return Logout()">Logout</a>`
+                let footer = document.querySelector("footer");
+                footer.setAttribute('class', 'footer footer_active')
             } else {
                 console.log(false)
             }

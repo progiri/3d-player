@@ -87,9 +87,10 @@ function AllMusic() {
             optionsRemove()
 
             for (music of data.musics) {
+                console.log(music)
                 let html = document.createElement('div')
                 html.setAttribute('class', 'option')
-                html.setAttribute('id', music.name + music.id)
+                html.setAttribute('id', music.id)
                 html.innerHTML = `<input type="radio" class="radio-btn" id="${music.name + music.id}" name="music">
                                   <label for="${music.name + music.id}">${music.name}</label>`
                 selectedMusic.appendChild(html)
@@ -97,6 +98,26 @@ function AllMusic() {
 
             optionSelector()
 
+            return data
+        })
+}
+
+
+function GetMusic(id) {
+    const myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+    myHeaders.append('Authorization', 'Bearer ' + getCookie('access_token'));
+
+    return fetch(`http://127.0.0.1:8000/api/v1/playlists/music/${id}/`, {
+            credentials: 'include',
+            mode: 'cors',
+            headers: myHeaders
+        })
+        .then(function(response) {
+            return response.json()
+        })
+        .then(function(data) {
+            console.log(data)
             return data
         })
 }

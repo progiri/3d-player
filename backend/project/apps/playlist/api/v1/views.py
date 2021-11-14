@@ -13,7 +13,6 @@ class UserShortPlaylists(generics.ListAPIView):
     serializer_class = ShortPlaylistSerializer
 
     def get_queryset(self):
-        print(self.request.user)
         return Playlist.objects.filter(user=self.request.user)
 
 
@@ -37,3 +36,9 @@ class PlaylistAddMusicView(generics.CreateAPIView):
             music = music    
         )
         return Response("Success")
+
+
+class PlaylistMusicDetail(generics.RetrieveUpdateAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = MusicSerializer
+    queryset = Music.objects.all()
