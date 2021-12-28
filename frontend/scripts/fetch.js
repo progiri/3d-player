@@ -17,7 +17,6 @@ function Login() {
             body: JSON.stringify(data)
         })
         .then(function(response) {
-            console.log(response)
             return response.json()
         })
         .then(function(data) {
@@ -73,7 +72,10 @@ function AllMusic() {
     myHeaders.append('Content-Type', 'application/json');
     myHeaders.append('Authorization', 'Bearer ' + getCookie('access_token'));
 
-    return fetch('http://127.0.0.1:8000/api/v1/playlists/1/', {
+    const playlist_id = getCookie('playlist_id')
+    console.log(playlist_id)
+
+    return fetch(`http://127.0.0.1:8000/api/v1/playlists/${playlist_id}/`, {
             credentials: 'include',
             mode: 'cors',
             headers: myHeaders
@@ -87,7 +89,6 @@ function AllMusic() {
             optionsRemove()
 
             for (music of data.musics) {
-                console.log(music)
                 let html = document.createElement('div')
                 html.setAttribute('class', 'option')
                 html.setAttribute('id', music.id)
@@ -117,7 +118,6 @@ function GetMusic(id) {
             return response.json()
         })
         .then(function(data) {
-            console.log(data)
             return data
         })
 }
@@ -137,6 +137,42 @@ function Profile() {
             return response.json()
         })
         .then(function(data) {
+            document.cookie = "playlist_id=" + data.playlist
             return data
+        })
+}
+
+
+function AddMusic(name, file) {
+    const myHeaders = new Headers();
+    myHeaders.append('Authorization', 'Bearer ' + getCookie('access_token'));
+
+    data = {
+        "name": name,
+        "music": file
+    }
+
+    const formData = new FormData();
+
+    formData.append("name", name);
+    formData.append("music", file);
+
+    const playlist_id = getCookie('playlist_id')
+
+    return fetch(`http://127.0.0.1:8000/api/v1/playlists/${playlist_id}/music/`, {
+            credentials: 'include',
+            mode: 'cors',
+            headers: myHeaders,
+            method: 'POST',
+            body: formData
+        })
+        .then(function(response) {
+            return response.json()
+        })
+        .then(function(data) {
+            return data
+        })
+        .catch(function(error) {
+            console.log(error)
         })
 }

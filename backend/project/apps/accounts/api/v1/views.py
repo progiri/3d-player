@@ -31,5 +31,6 @@ class RegisterView(generics.GenericAPIView):
 class ProfileView(generics.GenericAPIView):
     def get(self, request):
         return Response({
-            "username": request.user.username
+            "username": request.user.username,
+            "playlist": request.user.playlists.first().id
         })

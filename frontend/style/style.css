@@ -92,7 +92,48 @@ body {
     width: 50px;
     background-color: #3E4152;
     text-decoration: none;
-    border: none;
+    border-top: 5px solid #636363;
+    border-right: 5px solid #3D3D3D;
+    border-bottom: 5px solid #C9C9C9;
+    border-left: 5px solid #A3A3A3;
+}
+
+.action-btns:active {
+    border-top: 2px solid #3D3D3D;
+    border-right: 2px solid #3D3D3D;
+    border-bottom: 1px solid #B0B0B0;
+    border-left: 1px solid #636363;
+}
+
+.action-btns:active>.btn-pause {
+    margin-left: 7.5px;
+}
+
+.action-btns:active>.btn-play {
+    margin-left: 7.5px;
+}
+
+.action-btns:active>.btn-next {
+    margin-left: 7.5px;
+}
+
+.action-btns:active>.btn-previous {
+    margin-left: 7.5px;
+}
+
+.active-btn {
+    border-top: 3px solid #3D3D3D;
+    border-right: 3px solid #3D3D3D;
+    border-bottom: 3px solid #B0B0B0;
+    border-left: 3px solid #636363;
+}
+
+.active-btn>.btn-play {
+    margin-left: 7px;
+}
+
+.active-btn>.btn-pause {
+    margin-left: 6px;
 }
 
 .btn-play {
@@ -101,7 +142,7 @@ body {
     background-repeat: no-repeat;
     height: 20px;
     width: 20px;
-    margin-left: 9px;
+    margin-left: 5px;
 }
 
 .btn-pause {
@@ -110,7 +151,7 @@ body {
     background-repeat: no-repeat;
     height: 20px;
     width: 20px;
-    margin-left: 9px;
+    margin-left: 5px;
 }
 
 .btn-previous {
@@ -120,7 +161,7 @@ body {
     background-repeat: no-repeat;
     height: 20px;
     width: 20px;
-    margin-left: 9px;
+    margin-left: 5px;
 }
 
 .btn-next {
@@ -129,7 +170,7 @@ body {
     background-repeat: no-repeat;
     height: 20px;
     width: 20px;
-    margin-left: 9px;
+    margin-left: 5px;
 }
 
 
@@ -210,6 +251,50 @@ body {
 }
 
 
+/* Music add input */
+
+.music-add-container {
+    padding: 6px 24px;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.music-add-container:hover {
+    background-color: #54586F;
+}
+
+.music-add-link {
+    opacity: 70%;
+    transition: 0.2s;
+}
+
+.music-add-container:hover>.music-add-link {
+    opacity: 100%;
+}
+
+.music-add {
+    display: none;
+}
+
+.music-add-name {
+    margin: 5px;
+}
+
+.music-add-btn::before {
+    content: 'Add music';
+    border: 1px solid #999;
+    border-radius: 3px;
+    margin: 5px 20px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 10pt;
+}
+
+.music-add-btn:hover::before {
+    border-color: #ffd700;
+}
+
+
 /* Volume range slider section */
 
 .volume-container {
@@ -284,8 +369,12 @@ input[type="range"]::-webkit-slider-thumb {
     left: 5px;
 }
 
-input[type=text],
-input[type=password] {
+#loginUsername,
+#signupUsername,
+#loginPassword,
+#signupPassword1,
+#signupPassword2,
+#musicName {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -318,6 +407,12 @@ input[type=password] {
     width: auto;
     padding: 10px 18px;
     background-color: #f44336;
+    color: #FFF;
+    border: 0;
+}
+
+.cancelbtn:hover {
+    background-color: #f7766d;
 }
 
 
@@ -365,8 +460,17 @@ span.psw {
     margin: 5% auto 15% auto;
     /* 5% from the top, 15% from the bottom and centered */
     border: 1px solid #888;
-    width: 80%;
+    width: 50%;
     /* Could be more or less, depending on screen size */
+}
+
+.modal-header {
+    margin-left: 15px;
+    margin-top: 15px;
+}
+
+.modal-label {
+    font-size: medium;
 }
 
 

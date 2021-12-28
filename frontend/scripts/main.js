@@ -6,6 +6,54 @@ selected.addEventListener("click", () => {
     AllMusic();
 })
 
+
+var modals = document.querySelectorAll('.modal');
+
+// When the user clicks anywhere outside of the modal,   it
+window.onclick = function(event) {
+    modals.forEach(modal => {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    })
+}
+
+const musicAddInput = document.getElementById('musicAdd');
+const musicFile = document.getElementById('musicFile');
+
+musicAddInput.addEventListener("click", () => {
+    musicFile.click()
+})
+
+const musicAddBtn = document.getElementById('musicAddBtn')
+const addMusicModal = document.getElementById('musicAddForm')
+
+musicAddBtn.addEventListener("click", () => {
+    const musicName = document.getElementById('musicName').value;
+
+    AddMusic(musicName, musicFile.files[0])
+    addMusicModal.style.display = "none";
+    selected.click()
+
+})
+
+
+Profile().then((data) => {
+    if (data['username']) {
+        let headerLinks = document.querySelectorAll('.header_links')
+        headerLinks.forEach(el => el.style.display = 'none')
+        let headerUsername = document.getElementById('headerUsername')
+        headerUsername.innerHTML = `<a class="header__link">${data['username']}</a>
+                                <a class="header__link" onclick="return Logout()">Logout</a>`
+        let footer = document.querySelector("footer");
+        footer.setAttribute('class', 'footer footer_active')
+    } else {
+        console.log(false)
+    }
+
+})
+
+
 function optionsRemove() {
     const optionsList = document.querySelectorAll(".option")
 
@@ -38,16 +86,24 @@ function optionSelector() {
                 music.setAttribute('src', data.music);
             })
 
+            playBtn.setAttribute('class', 'action-btns active-btn')
+
             playBtn.addEventListener('click', () => {
+                pauseBtn.setAttribute('class', 'action-btns')
+                playBtn.setAttribute('class', 'action-btns active-btn')
                 music.play()
             })
 
             pauseBtn.addEventListener('click', () => {
+                playBtn.setAttribute('class', 'action-btns')
+                pauseBtn.setAttribute('class', 'action-btns active-btn')
                 music.pause()
             })
 
             previousBtn.addEventListener('click', () => {
-                if (i == 0) {} else {
+                playBtn.setAttribute('class', 'action-btns active-btn')
+                pauseBtn.setAttribute('class', 'action-btns')
+                if (i != 0) {
                     i -= 1;
                     console.log(i)
                     musicId = musicsList[i].getAttribute('id');
@@ -59,7 +115,9 @@ function optionSelector() {
             })
 
             nextBtn.addEventListener('click', () => {
-                if (i == musicsList.length - 1) {} else {
+                playBtn.setAttribute('class', 'action-btns active-btn')
+                pauseBtn.setAttribute('class', 'action-btns')
+                if (i != musicsList.length - 1) {
                     i += 1;
                     console.log(i)
                     musicId = musicsList[i].getAttribute('id');
@@ -69,8 +127,12 @@ function optionSelector() {
                     })
                 }
             })
-            const slider = document.getElementById("slider");
+
+            let slider = document.getElementById("slider");
             let number = document.getElementById('volume-number');
+
+            slider.value = 50;
+            number.innerHTML = slider.value;
 
             slider.oninput = function() {
                 number.innerHTML = slider.value;

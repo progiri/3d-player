@@ -32,12 +32,12 @@
                 <div id="loginForm" class="modal">
 
                     <div class="modal-content animate">
-                        <h1>Login</h1>
+                        <h1 class="modal-header">Login</h1>
                         <div class="container">
-                            <label for="uname"><b>Username</b></label>
+                            <label class="modal-label" for="uname"><b>Username</b></label>
                             <input type="text" id="loginUsername" placeholder="Enter Username" name="uname" required>
 
-                            <label for="psw"><b>Password</b></label>
+                            <label class="modal-label" for="psw"><b>Password</b></label>
                             <input type="password" id="loginPassword" placeholder="Enter Password" name="psw" required>
 
                             <button class="login_btn" onclick="return Login()" type="submit">Login</button>
@@ -52,15 +52,15 @@
                 <div id="signupForm" class="modal">
 
                     <div class="modal-content animate">
-                        <h1>Sign Up</h1>
+                        <h1 class="modal-header">Sign Up</h1>
                         <div class="container">
-                            <label for="uname"><b>Username</b></label>
+                            <label class="modal-label" for="uname"><b>Username</b></label>
                             <input type="text" id="signupUsername" placeholder="Enter Username" name="uname" required>
 
-                            <label for="psw"><b>Password</b></label>
+                            <label class="modal-label" for="psw"><b>Password</b></label>
                             <input type="password" id="signupPassword1" placeholder="Enter Password" name="psw" required>
 
-                            <label for="psw"><b>Repeat Password</b></label>
+                            <label class="modal-label" for="psw"><b>Repeat Password</b></label>
                             <input type="password" id="signupPassword2" placeholder="Enter Password" name="psw" required>
 
                             <button class="login_btn" onclick="return SignUp()" type="submit">Sign Up</button>
@@ -70,9 +70,27 @@
                             <button type="button" onclick="document.getElementById('signupForm').style.display='none'" class="cancelbtn">Cancel</button>
                         </div>
                     </div>
+                </div>
+                <div id="musicAddForm" class="modal">
+
+                    <div class="modal-content animate">
+                        <h1 class="modal-header">Add Music</h1>
+                        <div class="container">
+                            <label class="modal-label" for="name"><b>Name</b></label>
+                            <input type="text" id="musicName" placeholder="Enter Name" name="name" required>
+
+                            <input type="file" class="music-add" id="musicFile" accept="audio/*">
+                            <button id="musicAdd">Add music</button>
+
+                            <button class="login_btn" id="musicAddBtn" type="submit">Add</button>
+                        </div>
+
+                        <div class="container" style="background-color:#f1f1f1">
+                            <button type="button" onclick="document.getElementById('musicAddForm').style.display='none'" class="cancelbtn">Cancel</button>
+                        </div>
+                    </div>
 
                 </div>
-            </div>
         </header>
         <div id="3d_obj">
             <!-- <canvas id="canvasColor"></canvas> -->
@@ -83,7 +101,11 @@
                 <div class="select-container">
                     <div class="select-box">
                         <audio autoplay src="" id="audio"></audio>
-                        <div class="options-container" id="musicsContainer"></div>
+                        <div class="options-container" id="musicsContainer">
+                            <div class="music-add-container">
+                                <a class="music-add-link" onclick="document.getElementById('musicAddForm').style.display='block'">Add music</a>
+                            </div>
+                        </div>
                         <div class="selected" id="selectedMusic">
                             Selected Music
                         </div>
@@ -118,37 +140,11 @@
                 </div>
             </div>
         </footer>
-    </div>
-    <script type="module" src="scripts/3d.js"></script>
-    <script src="scripts/fetch.js"></script>
-    <script>
-        // Get the modal
-        var modal = document.getElementById('id01');
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-
-        // 
-        Profile().then((data) => {
-            if (data['username']) {
-                let headerLinks = document.querySelectorAll('.header_links')
-                headerLinks.forEach(el => el.style.display = 'none')
-                let headerUsername = document.getElementById('headerUsername')
-                headerUsername.innerHTML = `<a class="header__link">${data['username']}</a>
-                                            <a class="header__link" onclick="return Logout()">Logout</a>`
-                let footer = document.querySelector("footer");
-                footer.setAttribute('class', 'footer footer_active')
-            } else {
-                console.log(false)
-            }
-
-        })
-    </script>
-    <script src="scripts/main.js"></script>
+        </div>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.js" integrity="sha512-NLtnLBS9Q2w7GKK9rKxdtgL7rA7CAS85uC/0xd9im4J/yOL4F9ZVlv634NAM7run8hz3wI2GabaA6vv8vJtHiQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+        <script type="module" src="scripts/3d.js"></script>
+        <script src="scripts/fetch.js"></script>
+        <script src="scripts/main.js"></script>
 </body>
 
 </html>
