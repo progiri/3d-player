@@ -17,11 +17,23 @@ function Login() {
             body: JSON.stringify(data)
         })
         .then(function(response) {
-            return response.json()
+            switch (response.status){
+                case 401:
+                    formWarningLogin = document.getElementById('formWarningLogin');
+                    formWarningLogin.innerHTML = 'Wrong login or password';
+                    formWarningLogin.style.color = 'red';
+                    return 401;
+            }
+            return response.json();
         })
         .then(function(data) {
-            document.cookie = "access_token=" + data.access
-            location.reload()
+            switch(data){
+                case 401:
+                    break;
+                default:
+                    document.cookie = "access_token=" + data.access
+                    location.reload()
+            }
         })
 }
 
@@ -46,12 +58,47 @@ function SignUp() {
             body: JSON.stringify(data)
         })
         .then(function(response) {
-            return response.json()
+            json = response.json();
+            json.then(function(result){
+                console.log(result)
+            })
+            resStatus = response.status
+            return {'json': json, 'status': resStatus} 
+            // switch (response.status){
+            //     case 400:
+            //         formWarningSignUp = document.getElementById('formWarningSignUp')
+            //         formWarningSignUp.innerHTML == json[0]
+            //         formWarningSignUp.style.color = 'red'
+            //         return 400
+            //     default:
+            //         return 201
+            // }
         })
         .then(function(data) {
-            document.cookie = "access_token=" + data.access
-            location.reload()
+            switch(data['status']){
+                case 400:
+                    formWarningSignUp = document.getElementById('formWarningSignUp')
+                    formWarningSignUp.style.color = 'red'
+                    data['json'].then(function(result){
+                        console.log(result[0])
+                        formWarningSignUp.innerHTML = result[0]
+                    })
+                    break;
+                case 200:
+                    formWarningSignUp = document.getElementById('formWarningSignUp')
+                    formWarningSignUp.style.color = 'red'
+                    data['json'].then(function(result){
+                        console.log(result.error['username'])
+                        formWarningSignUp.innerHTML = result.error['username']
+                    })
+                    break;
+
+                case 201:
+                    document.cookie = "access_token=" + data.access
+                    // location.reload()
+            }
         })
+
 }
 
 
